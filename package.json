@@ -1,0 +1,17 @@
+{
+  "name": "tour-connect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd nuxt-frontend && npm run dev & cd express-backend && npm run dev",
+    "start:client": "cd nuxt-frontend && npm install && npm run build && node .output/server/index.mjs",
+    "start:server": "cd express-backend && npm install && npm run dev"
+  },
+  "author": {
+    "name": "Dulan Hewage",
+    "email": "dulanhewage2@hotmail.com",
+    "url": "https://dulan.me"
+  },
+  "license": "ISC"
+}

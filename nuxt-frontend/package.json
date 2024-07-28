@@ -1,0 +1,30 @@
+{
+  "name": "tour-connect-client",
+  "private": true,
+  "type": "module",
+  "author": {
+    "name": "Dulan Hewage",
+    "email": "dulanhewage2@hotmail.com",
+    "url": "https://dulan.me"
+  },
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/image": "^1.7.0",
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "@pinia/nuxt": "^0.5.1",
+    "nuxt": "^3.12.3",
+    "nuxt-icons": "^3.2.1",
+    "pinia": "^2.1.7",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "@vueuse/core": "^10.11.0",
+    "@vueuse/nuxt": "^10.11.0"
+  }
+}
