@@ -1,7 +1,7 @@
 [
   {
     "id": 25651,
-    "title": "Historical Tour: Parliament Buildings & Glass Dome",
+    "title": "Historical Tour: Parliament Buildings",
     "price": 20,
     "currency": "$",
     "rating": 4.7,
@@ -124,5 +124,140 @@
     "rating": 3.5,
     "specialOffer": false,
     "supplierId": 2
+  },
+  {
+    "id": 97834,
+    "title": "Berlin Wall Memorial: Guided Tour",
+    "price": 30,
+    "currency": "$",
+    "rating": 4.8,
+    "specialOffer": true,
+    "supplierId": 1
+  },
+  {
+    "id": 65739,
+    "title": "Classic Car Tour: East Berlin",
+    "price": 120,
+    "currency": "$",
+    "rating": 4.2,
+    "specialOffer": false,
+    "supplierId": 200
+  },
+  {
+    "id": 48392,
+    "title": "Berlin Street: Art Tour",
+    "price": 25,
+    "currency": "$",
+    "rating": 4.5,
+    "specialOffer": true,
+    "supplierId": 2
+  },
+  {
+    "id": 56403,
+    "title": "Evening Boat Tour: City Lights",
+    "price": 70,
+    "currency": "$",
+    "rating": 4.3,
+    "specialOffer": false,
+    "supplierId": 250
+  },
+  {
+    "id": 23981,
+    "title": "Berlin Food Tour: Tasting Experience",
+    "price": 80,
+    "currency": "$",
+    "rating": 4.6,
+    "specialOffer": true,
+    "supplierId": 1
+  },
+  {
+    "id": 82340,
+    "title": "Checkpoint Charlie: Historical Insights Tour",
+    "price": 40,
+    "currency": "$",
+    "rating": 4.4,
+    "specialOffer": false,
+    "supplierId": 2
+  },
+  {
+    "id": 37218,
+    "title": "Berlin Bike Tour: Historical Sites",
+    "price": 35,
+    "currency": "$",
+    "rating": 4.9,
+    "specialOffer": true,
+    "supplierId": 250
+  },
+  {
+    "id": 49302,
+    "title": "Photography Tour: Berlin at Night",
+    "price": 50,
+    "currency": "$",
+    "rating": 4.7,
+    "specialOffer": false,
+    "supplierId": 200
+  },
+  {
+    "id": 68210,
+    "title": "Berlin Underground Tour: Bunkers & Tunnels",
+    "price": 45,
+    "currency": "$",
+    "rating": 4.5,
+    "specialOffer": true,
+    "supplierId": 2
+  },
+  {
+    "id": 56120,
+    "title": "Berlin Brewery Tour: Craft Beer Tasting",
+    "price": 65,
+    "currency": "$",
+    "rating": 4.7,
+    "specialOffer": false,
+    "supplierId": 1
+  },
+  {
+    "id": 14932,
+    "title": "Jewish Berlin History & Culture Tour",
+    "price": 60,
+    "currency": "$",
+    "rating": 4.8,
+    "specialOffer": true,
+    "supplierId": 250
+  },
+  {
+    "id": 38017,
+    "title": "Berlin Cold War Tour: Historical Insights",
+    "price": 70,
+    "currency": "$",
+    "rating": 4.9,
+    "specialOffer": false,
+    "supplierId": 200
+  },
+  {
+    "id": 45129,
+    "title": "Third Reich: Berlin Historical Tour",
+    "price": 55,
+    "currency": "$",
+    "rating": 4.6,
+    "specialOffer": true,
+    "supplierId": 1
+  },
+  {
+    "id": 63950,
+    "title": "Berlin Hidden Gems: Walking Tour",
+    "price": 20,
+    "currency": "$",
+    "rating": 4.7,
+    "specialOffer": false,
+    "supplierId": 2
+  },
+  {
+    "id": 75381,
+    "title": "Berlin's Best: Top Attractions Tour",
+    "price": 75,
+    "currency": "$",
+    "rating": 4.8,
+    "specialOffer": true,
+    "supplierId": 250
   }
 ]

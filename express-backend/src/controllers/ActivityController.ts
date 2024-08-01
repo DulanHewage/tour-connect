@@ -4,7 +4,7 @@ import {
   handleErrorResponse,
   commaSeperatedStringToArray,
 } from "../helpers/index.js";
-import { FetchActivitiesParams } from "../types/index.js";
+import { FetchActivitiesParams } from "../../../shared/types/index.js";
 const activityService = new ActivityService();
 
 class ActivityController {

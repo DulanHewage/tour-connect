@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Activity } from "../../types";
+import type { Activity } from "../../../shared/types";
 const props = defineProps<{
   activity: Activity;
 }>();
@@ -7,8 +7,8 @@ const props = defineProps<{
 // Splits activity title into `mainTitle` and `subTitle` at the first colon.
 const title = computed(() => {
   return {
-    mainTitle: props.activity.title.split(":")[0] || "",
-    subTitle: props.activity.title.split(":")[1] || "",
+    mainTitle: props.activity.title?.split(":")[0] || "",
+    subTitle: props.activity.title?.split(":")[1] || "",
   };
 });
 </script>
@@ -16,6 +16,7 @@ const title = computed(() => {
 <template>
   <div
     class="w-full block shadow rounded-md border border-gray-300/50 hover:border-sky-500/50 hover:shadow-sm transition-all"
+    v-if="activity"
   >
     <div class="flex flex-col md:flex-row">
       <div class="w-100 md:w-4/12 relative">
@@ -30,8 +31,11 @@ const title = computed(() => {
       </div>
       <div class="w-100 md:w-8/12 flex flex-col md:flex-row pb-4 md:pb-0">
         <div class="w-100 md:w-9/12 p-6 md:p-4 lg:p-6">
-          <h2 class="text-lg mb-2">
-            <span class="font-bold">{{ title.mainTitle }}:</span>
+          <h2 class="text-lg mb-2 flex flex-wrap gap-1">
+            <span class="font-bold flex"
+              >{{ title.mainTitle }}
+              <span v-if="title.subTitle">:</span>
+            </span>
             <span>{{ title.subTitle }}</span>
           </h2>
           <BaseRating v-model="activity.rating" :max-stars="5" readonly />

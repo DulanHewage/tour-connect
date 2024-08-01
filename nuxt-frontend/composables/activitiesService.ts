@@ -1,4 +1,11 @@
-import type { Activity, Supplier, ActivityFilter, SearchQuery } from "../types";
+import type {
+  Activity,
+  Supplier,
+  ActivityFilter,
+  SearchQuery,
+  JSONResponse,
+  Pagination,
+} from "../../shared/types";
 
 export const useActivityService = () => {
   const { apiBase } = useAPIBase();
@@ -21,27 +28,32 @@ export const useActivityService = () => {
           query["q"] = searchFilters.value.searchQuery;
         }
         return await Promise.all([
-          $fetch<Supplier[]>(`${apiBase}/suppliers`),
-          $fetch<Activity[]>(`${apiBase}/activities`, {
+          $fetch<JSONResponse<Supplier[]>>(`${apiBase}/suppliers`),
+          $fetch<JSONResponse<Activity[]>>(`${apiBase}/activities`, {
             query: query,
           }),
         ]);
       }
     );
+    let pagination: Pagination | null = null;
     // sets the suppliers & activities state
     if (data.value) {
-      if (data.value[0]) suppliers.value = data.value[0];
-      if (data.value[1]) activities.value = data.value[1];
+      if (data.value[0]) suppliers.value = data.value[0].result;
+      if (data.value[1]) {
+        activities.value = data.value[1].result;
+        pagination = data.value[1].metadata?.pagination || null;
+      }
     }
 
-    activities.value = activities.value.map((activity) => {
-      const supplier = suppliers.value.find(
-        (supplier) => supplier.id === activity.supplierId
-      );
+    activities.value = activities.value.map((activity: Activity) => {
+      let supplier: Supplier | null = null;
+      if (activity.supplier) {
+        suppliers.value.find((supplier) => supplier.id === activity.supplierId);
+      }
       return { ...activity, supplier };
     });
 
-    return { activities, error, status, refresh };
+    return { activities, pagination, error, status, refresh };
   };
   const getActivityById = async (id: number) => {
     let activity = activities.value.find(

@@ -1,7 +1,7 @@
 import * as fs from "fs/promises";
 import * as path from "path";
 import { fileURLToPath } from "url";
-import { Supplier } from "../types/index.js";
+import { Supplier } from "../../../shared/types/index.js";
 
 class SupplierService {
   /**

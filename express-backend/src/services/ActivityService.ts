@@ -1,7 +1,13 @@
 import * as fs from "fs/promises";
 import * as path from "path";
 import { fileURLToPath } from "url";
-import { Activity, FetchActivitiesParams } from "../types/index.js";
+import {
+  Activity,
+  FetchActivitiesParams,
+  JSONResponse,
+  Pagination,
+} from "../../../shared/types/index.js";
+import { createJSONResponse } from "../helpers/index.js";
 
 class ActivityService {
   /**
@@ -14,15 +20,17 @@ class ActivityService {
    */
   async fetchActivities(
     params: FetchActivitiesParams = {}
-  ): Promise<Array<Activity>> {
+  ): Promise<JSONResponse<Activity[]>> {
     try {
       const __dirname = path.dirname(fileURLToPath(import.meta.url));
       const filePath = path.resolve(__dirname, "../static/activities.json");
       const fileContent = await fs.readFile(filePath, "utf8");
       const activities: Array<Activity> = JSON.parse(fileContent);
-      console.log("params", params);
-      let filteredActivities = activities;
 
+      let filteredActivities = activities;
+      const pagination: Pagination = {
+        totalItems: activities.length,
+      };
       if (params.activityIds?.length) {
         filteredActivities = this.filterByIds(
           filteredActivities,
@@ -55,11 +63,10 @@ class ActivityService {
         filteredActivities = this.filterByTitle(filteredActivities, params.q);
       }
 
-      return filteredActivities;
-    } catch (error) {
-      throw new Error("Failed to fetch activities.");
+      return createJSONResponse(filteredActivities, pagination);
+    } catch (error: any) {
+      throw new Error("Failed to fetch activities. " + error.message);
     }
-    ``;
   }
 
   private filterByIds(
@@ -106,8 +113,6 @@ class ActivityService {
     activities: Array<Activity>,
     title: string
   ): Array<Activity> {
-    console.log("no of activities", activities.length);
-    console.log("q", title);
     const lowerCaseTitle = title.toLowerCase();
     return activities.filter((activity) =>
       activity.title.toLowerCase().includes(lowerCaseTitle)

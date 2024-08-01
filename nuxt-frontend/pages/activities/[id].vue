@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Activity } from "../../types";
+import type { Activity } from "../../../shared/types";
 
 const { params } = useRoute();
 const { getActivityById } = useActivityService();

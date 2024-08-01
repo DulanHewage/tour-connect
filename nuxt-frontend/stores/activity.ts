@@ -1,7 +1,8 @@
-import type { Activity, ActivityFilter } from "../types/index";
+import type { Activity, ActivityFilter } from "../../shared/types";
 export const useActivityStore = defineStore("activity", () => {
   const activities = ref<Activity[]>([]);
   const filters = reactive<ActivityFilter>({
+    searchQuery: "",
     selectedRating: "",
     specialOffer: false,
     price: 0,

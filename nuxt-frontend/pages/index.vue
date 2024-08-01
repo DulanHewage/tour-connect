@@ -14,7 +14,7 @@
       <div v-else>
         <div class="pt-4 pb-2 text-gray-600 text-sm">
           Showing {{ activities.length }} of
-          {{ activities ? activities.length : 0 }} activities
+          {{ pagination?.totalItems ? pagination?.totalItems : 0 }} activities
         </div>
         <div class="pb-6 flex flex-col gap-6">
           <ActivityCard
@@ -40,7 +40,7 @@
 const { setActivities } = useActivityStore();
 const { getActivities, searchFilters } = useActivityService();
 
-const { activities, error, status } = await getActivities();
+const { activities, pagination, error, status } = await getActivities();
 
 onMounted(() => {
   // sets the activities in the store

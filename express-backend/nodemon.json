@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ext": ".js,.ts",
   "ignore": [],
-  "exec": "npm run build && node dist/src/server.js"
+  "exec": "npm run build && node dist/express-backend/src/server.js"
 }

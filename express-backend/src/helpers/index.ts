@@ -1,5 +1,9 @@
 import { Response } from "express";
-import { ErrorResponse } from "../types/index.js";
+import {
+  ErrorResponse,
+  JSONResponse,
+  Pagination,
+} from "../../../shared/types/index.js";
 
 /**
  * Handles error responses for routes.
@@ -39,4 +43,19 @@ export function commaSeperatedStringToArray(
     return commaSeperatedString.split(",").map((s) => Number(s));
   }
   return [];
+}
+
+export function createJSONResponse<T>(
+  result: T,
+  pagination: Pagination | null = null,
+  error: ErrorResponse | null = null
+): JSONResponse<T> {
+  return {
+    result,
+    metadata: {
+      timestamp: new Date().toISOString(),
+      pagination: pagination || undefined,
+    },
+    error,
+  };
 }

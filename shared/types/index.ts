@@ -6,7 +6,7 @@ export interface Activity {
   rating: number;
   specialOffer: boolean;
   supplierId: number;
-  supplier?: Supplier;
+  supplier?: Supplier | null;
 }
 export interface Supplier {
   id: number;
@@ -17,6 +17,7 @@ export interface Supplier {
   country: string;
 }
 export interface ActivityFilter {
+  searchQuery: string;
   selectedRating: number | string;
   specialOffer: boolean;
   price: number;
@@ -24,4 +25,35 @@ export interface ActivityFilter {
 export interface ErrorResponse {
   message: string;
   error?: string;
+}
+export interface FetchActivitiesParams {
+  activityIds?: number[];
+  rating?: number;
+  specialOffer?: boolean;
+  priceRange?: [number, number];
+  q?: string;
+  // TODO: Add pagination properties
+  page?: number;
+  limit?: number;
+}
+export interface SearchQuery {
+  q?: string;
+  rating?: number;
+  specialOffer?: boolean;
+  activityIds?: number[];
+  priceRange?: number[];
+}
+export interface Pagination {
+  currentPage?: number;
+  totalPages?: number;
+  pageSize?: number;
+  totalItems?: number;
+}
+export interface JSONResponse<T> {
+  result: T;
+  metadata?: {
+    timestamp?: string; // ISO 8601 format
+    pagination?: Pagination;
+  };
+  error?: ErrorResponse | null;
 }
