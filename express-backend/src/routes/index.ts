@@ -9,8 +9,6 @@ router.get("/", (req, res) => {
 });
 
 router.get("/activities", ActivityController.fetchActivities);
-router.get("/activities/:id", ActivityController.fetchActivities);
 router.get("/suppliers", SupplierController.fetchSuppliers);
-router.get("/suppliers/:id", SupplierController.fetchSuppliers);
 
 export default router;

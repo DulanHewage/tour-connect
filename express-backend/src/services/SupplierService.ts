@@ -2,6 +2,7 @@ import * as fs from "fs/promises";
 import * as path from "path";
 import { fileURLToPath } from "url";
 import { Supplier } from "../../../shared/types/index.js";
+import { SupplierModel } from "../models/SupplierModel.js";
 
 class SupplierService {
   /**
@@ -11,18 +12,19 @@ class SupplierService {
    * @returns {Promise<Array<Supplier>>} A promise that resolves to an array of suppliers.
    * @throws {Error} Throws an error if reading or parsing the file fails.
    */
-  async fetchSuppliers(supplierIds: number[]): Promise<Array<Supplier>> {
+  async fetchSuppliers(supplierIds: string[]): Promise<Array<Supplier>> {
     try {
-      const __dirname = path.dirname(fileURLToPath(import.meta.url));
-      const filePath = path.resolve(__dirname, "../static/suppliers.json");
-      const fileContent = await fs.readFile(filePath, "utf8");
-      const suppliers: Array<Supplier> = JSON.parse(fileContent);
-
+      // Check if supplierIds array is not empty
       if (supplierIds?.length) {
-        return suppliers.filter((supplier) =>
-          supplierIds.includes(supplier.id)
-        );
+        // // Fetch suppliers whose _id is in the supplierIds array
+        return (await SupplierModel.find({
+          _id: { $in: supplierIds },
+        })) as Supplier[];
       }
+      // If no supplierIds are provided, fetch all suppliers
+      const suppliers: Array<Supplier> = (await SupplierModel.find(
+        {}
+      )) as Supplier[];
 
       return suppliers;
     } catch (error) {

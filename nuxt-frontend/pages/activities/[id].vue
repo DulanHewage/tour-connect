@@ -3,11 +3,11 @@
     <div>
       <div class="w-full relative">
         <NuxtImg
-          :src="`activities/${activity?.id}.png`"
+          :src="`activities/${activity?._id}.png`"
           :alt="activity?.title"
           class="w-full h-[400px] object-cover"
           placeholder
-          v-if="activity?.id"
+          v-if="activity?._id"
         />
         <div
           class="z-10 absolute bottom-0 left-0 bg-gradient-to-t from-black h-full w-full flex"
@@ -64,6 +64,7 @@ import type { Activity } from "../../../shared/types";
 const { params } = useRoute();
 const { getActivityById } = useActivityService();
 
-const activityId: number = parseInt(params.id as string);
-const activity: Activity | undefined = await getActivityById(activityId);
+const activity: Activity | undefined = await getActivityById(
+  params.id as string
+);
 </script>

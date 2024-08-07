@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import SupplierService from "../services/SupplierService.js";
-import { handleErrorResponse } from "../helpers/index.js";
+import {
+  handleErrorResponse,
+  commaSeperatedStringToArray,
+} from "../helpers/index.js";
 const supplierService = new SupplierService();
 
 class SupplierController {
@@ -14,11 +17,16 @@ class SupplierController {
    */
   static async fetchSuppliers(req: Request, res: Response): Promise<void> {
     try {
-      const supplierIds = [];
-      if (req.params.id) {
-        supplierIds.push(Number(req.params.id));
+      // Initialize an empty array to hold supplier IDs
+      let supplierIds: string[] = [];
+      // Check if supplierIds query parameter is a string
+      if (typeof req.query.supplierIds === "string") {
+        // Convert the comma-separated string to an array of supplier IDs
+        supplierIds = commaSeperatedStringToArray(req.query.supplierIds);
       }
+      // Fetch suppliers using the supplierService with the provided supplier IDs
       const suppliers = await supplierService.fetchSuppliers(supplierIds);
+      // Send the fetched suppliers as a JSON response with status 200
       res.status(200).json(suppliers);
     } catch (error) {
       handleErrorResponse(error, res);

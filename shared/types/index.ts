@@ -1,15 +1,15 @@
 export interface Activity {
-  id: number;
+  _id: string;
   title: string;
   price: number;
   currency: string;
   rating: number;
   specialOffer: boolean;
-  supplierId: number;
+  supplierId: string;
   supplier?: Supplier | null;
 }
 export interface Supplier {
-  id: number;
+  _id: string;
   name: string;
   address: string;
   zip: string;
@@ -27,7 +27,7 @@ export interface ErrorResponse {
   error?: string;
 }
 export interface FetchActivitiesParams {
-  activityIds?: number[];
+  activityIds?: string[];
   rating?: number;
   specialOffer?: boolean;
   priceRange?: [number, number];

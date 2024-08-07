@@ -1,34 +1,34 @@
 [
   {
     "id": 1,
-    "name": "John Doe",
-    "address": "123 Main St",
-    "zip": "12345",
-    "city": "Anytown",
+    "name": "Alice Smith",
+    "address": "789 Elm St",
+    "zip": "54321",
+    "city": "Dallas",
     "country": "USA"
   },
   {
     "id": 2,
-    "name": "Jane Doe",
-    "address": "456 Main St",
-    "zip": "12345",
-    "city": "Anytown",
+    "name": "Bob Johnson",
+    "address": "321 Oak St",
+    "zip": "54321",
+    "city": "Los Angeles",
     "country": "USA"
   },
   {
-    "id": 200,
-    "name": "Jackie Chan",
-    "address": "789 Main St",
-    "zip": "10000",
-    "city": "Hong Kong",
+    "id": 3,
+    "name": "Bruce Lee",
+    "address": "123 Bamboo Rd",
+    "zip": "20000",
+    "city": "Shanghai",
     "country": "China"
   },
   {
-    "id": 250,
-    "name": "Ion Popescu",
-    "address": "Str. Veseliei, Nr. 4",
-    "zip": "253445",
-    "city": "Bucharest",
+    "id": 4,
+    "name": "Maria Ionescu",
+    "address": "Str. Fericirii, Nr. 5",
+    "zip": "654321",
+    "city": "Cluj-Napoca",
     "country": "Romania"
   }
 ]

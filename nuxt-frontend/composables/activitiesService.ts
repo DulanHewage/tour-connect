@@ -48,16 +48,18 @@ export const useActivityService = () => {
     activities.value = activities.value.map((activity: Activity) => {
       let supplier: Supplier | null = null;
       if (activity.supplier) {
-        suppliers.value.find((supplier) => supplier.id === activity.supplierId);
+        suppliers.value.find(
+          (supplier) => supplier._id === activity.supplierId
+        );
       }
       return { ...activity, supplier };
     });
 
     return { activities, pagination, error, status, refresh };
   };
-  const getActivityById = async (id: number) => {
+  const getActivityById = async (id: string) => {
     let activity = activities.value.find(
-      (activity: Activity) => activity.id === id
+      (activity: Activity) => activity._id === id
     );
     if (!activity) {
       const { data } = await useAsyncData<Activity[]>(

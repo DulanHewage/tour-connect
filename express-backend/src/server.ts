@@ -5,6 +5,7 @@ dotenv.config();
 import morgan from "morgan";
 import { Request, Response, NextFunction } from "express";
 import routes from "./routes/index.js";
+import connectDB from "./db/index.js";
 const app = express();
 
 const morganMiddleware = morgan(
@@ -44,5 +45,11 @@ app.use(
 
 const port = process.env.PORT || 5000;
 app.listen(port, async () => {
+  try {
+    await connectDB();
+  } catch (err) {
+    console.error("Error connecting to MongoDB", err);
+    process.exit(1);
+  }
   console.log(`server started on port: ${port}`);
 });

@@ -1,6 +1,3 @@
-import * as fs from "fs/promises";
-import * as path from "path";
-import { fileURLToPath } from "url";
 import {
   Activity,
   FetchActivitiesParams,
@@ -8,6 +5,9 @@ import {
   Pagination,
 } from "../../../shared/types/index.js";
 import { createJSONResponse } from "../helpers/index.js";
+import { ActivityModel } from "../models/ActivityModel.js";
+import { SupplierModel } from "../models/SupplierModel.js";
+import mongoose from "mongoose";
 
 class ActivityService {
   /**
@@ -22,10 +22,32 @@ class ActivityService {
     params: FetchActivitiesParams = {}
   ): Promise<JSONResponse<Activity[]>> {
     try {
-      const __dirname = path.dirname(fileURLToPath(import.meta.url));
-      const filePath = path.resolve(__dirname, "../static/activities.json");
-      const fileContent = await fs.readFile(filePath, "utf8");
-      const activities: Array<Activity> = JSON.parse(fileContent);
+      const activity: Activity | null = await ActivityModel.findOne();
+      console.log("activity supplier id: ", activity?.supplierId); // Check the value and type of supplierId
+
+      const supplier = await SupplierModel.findOne({
+        _id: activity?.supplierId,
+      });
+      console.log("selected supplier", supplier); // checked: outputs correcly
+
+      const collections = await mongoose.connection.db
+        .listCollections()
+        .toArray();
+      console.log(collections); // checked, collection names is correct.
+
+      // const activities = (await ActivityModel.find({})) as Activity[];
+      const activities = await ActivityModel.aggregate([
+        {
+          $lookup: {
+            from: "suppliers", // The name of the Supplier collection
+            localField: "supplierId",
+            foreignField: "_id",
+            as: "supplierDetails",
+          },
+        },
+      ]);
+
+      // console.log("activities", activities);
 
       let filteredActivities = activities;
       const pagination: Pagination = {
@@ -71,9 +93,9 @@ class ActivityService {
 
   private filterByIds(
     activities: Array<Activity>,
-    ids: number[]
+    ids: string[]
   ): Array<Activity> {
-    return activities.filter((activity) => ids.includes(activity.id));
+    return activities.filter((activity) => ids.includes(activity._id));
   }
 
   private filterByRating(

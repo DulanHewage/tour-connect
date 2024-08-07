@@ -19,7 +19,7 @@
         <div class="pb-6 flex flex-col gap-6">
           <ActivityCard
             v-for="activity in activities"
-            :key="activity.id"
+            :key="activity._id"
             :activity="activity"
           />
           <div

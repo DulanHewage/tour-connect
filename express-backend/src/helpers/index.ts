@@ -36,11 +36,11 @@ export function handleErrorResponse(
 
 export function commaSeperatedStringToArray(
   commaSeperatedString: string | string[] | undefined
-): number[] {
+): string[] {
   if (Array.isArray(commaSeperatedString)) {
-    return commaSeperatedString.map((s) => Number(s));
+    return commaSeperatedString.map((s) => s);
   } else if (commaSeperatedString) {
-    return commaSeperatedString.split(",").map((s) => Number(s));
+    return commaSeperatedString.split(",").map((s) => s);
   }
   return [];
 }

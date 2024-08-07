@@ -1,7 +1,7 @@
 [
   {
-    "id": 25651,
-    "title": "Historical Tour: Parliament Buildings",
+    "id": "25651",
+    "title": "Historical Tour: Westminster Abbey",
     "price": 20,
     "currency": "$",
     "rating": 4.7,
@@ -9,8 +9,8 @@
     "supplierId": 1
   },
   {
-    "id": 6960,
-    "title": "Fast Track: Art Museum Berlin Tickets",
+    "id": "6960",
+    "title": "Fast Track: Louvre Museum Tickets",
     "price": 25,
     "currency": "$",
     "rating": 4.9,
@@ -18,8 +18,8 @@
     "supplierId": 2
   },
   {
-    "id": 80426,
-    "title": "Berlin CityPass: Transport, Discounts & Guide",
+    "id": "80426",
+    "title": "Paris CityPass: Transport, Discounts & Guide",
     "price": 12,
     "currency": "$",
     "rating": 4.5,
@@ -27,8 +27,8 @@
     "supplierId": 2
   },
   {
-    "id": 23113,
-    "title": "Fast Track: Berlin Observation Tower Ticket",
+    "id": "23113",
+    "title": "Fast Track: Eiffel Tower Observation Deck Ticket",
     "price": 150,
     "currency": "$",
     "rating": 4.7,
@@ -36,8 +36,8 @@
     "supplierId": 2
   },
   {
-    "id": 26093,
-    "title": "1-Hour City Boat Tour with Reserved Seating",
+    "id": "26093",
+    "title": "1-Hour Amsterdam Canal Tour with Reserved Seating",
     "price": 18,
     "currency": "$",
     "rating": 4.4,
@@ -45,8 +45,8 @@
     "supplierId": 1
   },
   {
-    "id": 97470,
-    "title": "Berlin Hop-on Hop-off Bus Tour: 1- or 2-Day Pass",
+    "id": "97470",
+    "title": "London Hop-on Hop-off Bus Tour: 1- or 2-Day Pass",
     "price": 220,
     "currency": "$",
     "rating": 4.2,
@@ -54,8 +54,8 @@
     "supplierId": 200
   },
   {
-    "id": 15647,
-    "title": "Historical Tour: Reichstag with Dome & Chamber",
+    "id": "15647",
+    "title": "Historical Tour: Colosseum with Arena & Underground",
     "price": 60,
     "currency": "$",
     "rating": 4.9,
@@ -63,8 +63,8 @@
     "supplierId": 250
   },
   {
-    "id": 26823,
-    "title": "Berlin: 2.5-Hour Spree River Cruise",
+    "id": "26823",
+    "title": "Paris: 2.5-Hour Seine River Cruise",
     "price": 45,
     "currency": "$",
     "rating": 4.6,
@@ -72,8 +72,8 @@
     "supplierId": 1
   },
   {
-    "id": 58351,
-    "title": "Museum Pass Berlin: 3-Day Access to 40+ Museums",
+    "id": "58351",
+    "title": "Museum Pass Rome: 3-Day Access to 40+ Museums",
     "price": 15,
     "currency": "$",
     "rating": 4.6,
@@ -81,8 +81,8 @@
     "supplierId": 250
   },
   {
-    "id": 75009,
-    "title": "Reichstag: Rooftop Cafe Experience",
+    "id": "75009",
+    "title": "Colosseum: Rooftop Cafe Experience",
     "price": 55,
     "currency": "$",
     "rating": 4.7,
@@ -90,8 +90,8 @@
     "supplierId": 2
   },
   {
-    "id": 19340,
-    "title": "Fast Track: Neues Museum Berlin Entry",
+    "id": "19340",
+    "title": "Fast Track: Uffizi Gallery Florence Entry",
     "price": 50,
     "currency": "$",
     "rating": 5.0,
@@ -99,8 +99,8 @@
     "supplierId": 250
   },
   {
-    "id": 13399,
-    "title": "Historical Tour: Reichstag Dome Chamber",
+    "id": "13399",
+    "title": "Historical Tour: Roman Forum & Palatine Hill",
     "price": 90,
     "currency": "$",
     "rating": 4.9,
@@ -108,8 +108,8 @@
     "supplierId": 200
   },
   {
-    "id": 86150,
-    "title": "Berlin Hop-on Hop-off Bus Tour with Commentary",
+    "id": "86150",
+    "title": "Madrid Hop-on Hop-off Bus Tour with Commentary",
     "price": 10,
     "currency": "$",
     "rating": 3.8,
@@ -117,8 +117,8 @@
     "supplierId": 1
   },
   {
-    "id": 40881,
-    "title": "Fast Track: TV Tower Early Bird Entry",
+    "id": "40881",
+    "title": "Fast Track: Sagrada Familia Early Bird Entry",
     "price": 145,
     "currency": "$",
     "rating": 3.5,
@@ -126,8 +126,8 @@
     "supplierId": 2
   },
   {
-    "id": 97834,
-    "title": "Berlin Wall Memorial: Guided Tour",
+    "id": "97834",
+    "title": "Anne Frank House Memorial: Guided Tour",
     "price": 30,
     "currency": "$",
     "rating": 4.8,
@@ -135,8 +135,8 @@
     "supplierId": 1
   },
   {
-    "id": 65739,
-    "title": "Classic Car Tour: East Berlin",
+    "id": "65739",
+    "title": "Classic Car Tour: Paris Landmarks",
     "price": 120,
     "currency": "$",
     "rating": 4.2,
@@ -144,8 +144,17 @@
     "supplierId": 200
   },
   {
-    "id": 48392,
-    "title": "Berlin Street: Art Tour",
+    "id": "65739",
+    "title": "Florence Street: Art Tour",
+    "price": 120,
+    "currency": "$",
+    "rating": 4.2,
+    "specialOffer": false,
+    "supplierId": 200
+  },
+  {
+    "id": "48392",
+    "title": "Evening Boat Tour: Venice by Night",
     "price": 25,
     "currency": "$",
     "rating": 4.5,
@@ -153,8 +162,8 @@
     "supplierId": 2
   },
   {
-    "id": 56403,
-    "title": "Evening Boat Tour: City Lights",
+    "id": "56403",
+    "title": "Barcelona Food Tour: Tasting Experience",
     "price": 70,
     "currency": "$",
     "rating": 4.3,
@@ -162,8 +171,8 @@
     "supplierId": 250
   },
   {
-    "id": 23981,
-    "title": "Berlin Food Tour: Tasting Experience",
+    "id": "23981",
+    "title": "Stonehenge: Historical Insights Tour",
     "price": 80,
     "currency": "$",
     "rating": 4.6,
@@ -171,8 +180,8 @@
     "supplierId": 1
   },
   {
-    "id": 82340,
-    "title": "Checkpoint Charlie: Historical Insights Tour",
+    "id": "82340",
+    "title": "Rome Bike Tour: Historical Sites",
     "price": 40,
     "currency": "$",
     "rating": 4.4,
@@ -180,8 +189,8 @@
     "supplierId": 2
   },
   {
-    "id": 37218,
-    "title": "Berlin Bike Tour: Historical Sites",
+    "id": "37218",
+    "title": "Photography Tour: Prague at Night",
     "price": 35,
     "currency": "$",
     "rating": 4.9,
@@ -189,8 +198,8 @@
     "supplierId": 250
   },
   {
-    "id": 49302,
-    "title": "Photography Tour: Berlin at Night",
+    "id": "49302",
+    "title": "Florence Street: Art Tour",
     "price": 50,
     "currency": "$",
     "rating": 4.7,
@@ -198,8 +207,8 @@
     "supplierId": 200
   },
   {
-    "id": 68210,
-    "title": "Berlin Underground Tour: Bunkers & Tunnels",
+    "id": "68210",
+    "title": "Evening Boat Tour: Venice by Night",
     "price": 45,
     "currency": "$",
     "rating": 4.5,
@@ -207,8 +216,8 @@
     "supplierId": 2
   },
   {
-    "id": 56120,
-    "title": "Berlin Brewery Tour: Craft Beer Tasting",
+    "id": "56120",
+    "title": "Barcelona Food Tour: Tasting Experience",
     "price": 65,
     "currency": "$",
     "rating": 4.7,
@@ -216,8 +225,8 @@
     "supplierId": 1
   },
   {
-    "id": 14932,
-    "title": "Jewish Berlin History & Culture Tour",
+    "id": "14932",
+    "title": "Stonehenge: Historical Insights Tour",
     "price": 60,
     "currency": "$",
     "rating": 4.8,
@@ -225,8 +234,8 @@
     "supplierId": 250
   },
   {
-    "id": 38017,
-    "title": "Berlin Cold War Tour: Historical Insights",
+    "id": "38017",
+    "title": "Rome Bike Tour: Historical Sites",
     "price": 70,
     "currency": "$",
     "rating": 4.9,
@@ -234,8 +243,8 @@
     "supplierId": 200
   },
   {
-    "id": 45129,
-    "title": "Third Reich: Berlin Historical Tour",
+    "id": "45129",
+    "title": "Photography Tour: Prague at Night",
     "price": 55,
     "currency": "$",
     "rating": 4.6,
@@ -243,8 +252,8 @@
     "supplierId": 1
   },
   {
-    "id": 63950,
-    "title": "Berlin Hidden Gems: Walking Tour",
+    "id": "63950",
+    "title": "Vienna Underground Tour: Bunkers & Tunnels",
     "price": 20,
     "currency": "$",
     "rating": 4.7,
@@ -252,8 +261,8 @@
     "supplierId": 2
   },
   {
-    "id": 75381,
-    "title": "Berlin's Best: Top Attractions Tour",
+    "id": "75381",
+    "title": "Munich Brewery Tour: Craft Beer Tasting",
     "price": 75,
     "currency": "$",
     "rating": 4.8,

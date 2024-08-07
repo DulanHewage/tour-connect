@@ -22,7 +22,7 @@ const title = computed(() => {
       <div class="w-100 md:w-4/12 relative">
         <ActivityRibbon v-if="activity.specialOffer">Offer!</ActivityRibbon>
         <NuxtImg
-          :src="`activities/${activity.id}.png`"
+          :src="`activities/${activity._id}.png`"
           :alt="activity.title"
           class="h-[200px] w-full object-cover"
           placeholder
@@ -60,7 +60,7 @@ const title = computed(() => {
             <span class="text-sm text-gray-600/70">Per person</span>
           </div>
           <NuxtLink
-            :to="`activities/${activity.id}`"
+            :to="`activities/${activity._id}`"
             class="w-full md:w-auto block"
           >
             <BaseButton class="w-full">Details</BaseButton>
