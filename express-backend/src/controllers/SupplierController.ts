@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import SupplierService from "../services/SupplierService.js";
 import {
   handleErrorResponse,
-  commaSeperatedStringToArray,
+  commaSeparatedStringToArray,
 } from "../helpers/index.js";
 const supplierService = new SupplierService();
 
@@ -22,7 +22,7 @@ class SupplierController {
       // Check if supplierIds query parameter is a string
       if (typeof req.query.supplierIds === "string") {
         // Convert the comma-separated string to an array of supplier IDs
-        supplierIds = commaSeperatedStringToArray(req.query.supplierIds);
+        supplierIds = commaSeparatedStringToArray(req.query.supplierIds);
       }
       // Fetch suppliers using the supplierService with the provided supplier IDs
       const suppliers = await supplierService.fetchSuppliers(supplierIds);

@@ -34,7 +34,7 @@ export function handleErrorResponse(
   res.status(statusCode).json(errorResponse);
 }
 
-export function commaSeperatedStringToArray(
+export function commaSeparatedStringToArray(
   commaSeperatedString: string | string[] | undefined
 ): string[] {
   if (Array.isArray(commaSeperatedString)) {
