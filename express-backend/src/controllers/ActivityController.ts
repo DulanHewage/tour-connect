@@ -36,6 +36,12 @@ class ActivityController {
           fetchActivitiesParams.priceRange = [priceRange[0], priceRange[1]];
         }
       }
+      if (typeof req.query.page === "string") {
+        fetchActivitiesParams.page = Number(req.query.page);
+      }
+      if (typeof req.query.pageSize === "string") {
+        fetchActivitiesParams.pageSize = Number(req.query.pageSize);
+      }
 
       const activities = await activityService.fetchActivities(
         fetchActivitiesParams

@@ -35,6 +35,7 @@ export interface FetchActivitiesParams {
   // TODO: Add pagination properties
   page?: number;
   limit?: number;
+  pageSize?: number;
 }
 export interface SearchQuery {
   q?: string;

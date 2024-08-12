@@ -6,7 +6,6 @@ import {
 } from "../../../shared/types/index.js";
 import { createJSONResponse } from "../helpers/index.js";
 import { ActivityModel } from "../models/ActivityModel.js";
-import { SupplierModel } from "../models/SupplierModel.js";
 import mongoose from "mongoose";
 
 class ActivityService {
@@ -15,130 +14,91 @@ class ActivityService {
    * If no filters are provided, returns all activities.
    *
    * @param {FetchActivitiesParams} params An object containing filter parameters.
-   * @returns {Promise<Array<Activity>>} A promise that resolves to an array of user activities, filtered by the provided parameters if any.
+   * @returns {Promise<JSONResponse<Activity[]>>} A promise that resolves to an array of user activities, filtered by the provided parameters if any.
    * @throws {Error} Throws an error if reading or parsing the file fails.
    */
   async fetchActivities(
     params: FetchActivitiesParams = {}
   ): Promise<JSONResponse<Activity[]>> {
     try {
-      const activity: Activity | null = await ActivityModel.findOne();
-      console.log("activity supplier id: ", activity?.supplierId); // Check the value and type of supplierId
-
-      const supplier = await SupplierModel.findOne({
-        _id: activity?.supplierId,
-      });
-      console.log("selected supplier", supplier); // checked: outputs correcly
-
-      const collections = await mongoose.connection.db
-        .listCollections()
-        .toArray();
-      console.log(collections); // checked, collection names is correct.
-
-      // const activities = (await ActivityModel.find({})) as Activity[];
-      const activities = await ActivityModel.aggregate([
+      const aggregateOptions: mongoose.PipelineStage[] = [
         {
           $lookup: {
-            from: "suppliers", // The name of the Supplier collection
+            from: "suppliers",
             localField: "supplierId",
             foreignField: "_id",
             as: "supplierDetails",
           },
         },
-      ]);
+      ];
 
-      // console.log("activities", activities);
+      const matchQuery = this.buildMatchQuery(params);
+      if (Object.keys(matchQuery).length > 0) {
+        aggregateOptions.push({ $match: matchQuery });
+      }
 
-      let filteredActivities = activities;
+      this.applySorting(aggregateOptions, params);
+
+      // Add pagination stages
+      const page = params.page || 1;
+      const pageSize = params.pageSize || 10;
+      const skip = (page - 1) * pageSize;
+
+      aggregateOptions.push({ $skip: skip });
+      aggregateOptions.push({ $limit: pageSize });
+
+      const activities = await ActivityModel.aggregate(aggregateOptions);
+
+      const totalItems = await ActivityModel.countDocuments(matchQuery);
       const pagination: Pagination = {
-        totalItems: activities.length,
+        totalItems,
       };
-      if (params.activityIds?.length) {
-        filteredActivities = this.filterByIds(
-          filteredActivities,
-          params.activityIds
-        );
-      }
 
-      if (params.rating !== undefined) {
-        filteredActivities = this.filterByRating(
-          filteredActivities,
-          params.rating
-        );
-      }
-
-      if (params.specialOffer !== undefined) {
-        filteredActivities = this.filterBySpecialOffer(
-          filteredActivities,
-          params.specialOffer
-        );
-      }
-
-      if (params.priceRange?.length === 2) {
-        filteredActivities = this.filterByPriceRange(
-          filteredActivities,
-          params.priceRange
-        );
-      }
-
-      if (params.q !== undefined) {
-        filteredActivities = this.filterByTitle(filteredActivities, params.q);
-      }
-
-      return createJSONResponse(filteredActivities, pagination);
+      return createJSONResponse(activities, pagination);
     } catch (error: any) {
+      console.error("Error fetching activities:", error);
       throw new Error("Failed to fetch activities. " + error.message);
     }
   }
 
-  private filterByIds(
-    activities: Array<Activity>,
-    ids: string[]
-  ): Array<Activity> {
-    return activities.filter((activity) => ids.includes(activity._id));
+  private buildMatchQuery(
+    params: FetchActivitiesParams
+  ): mongoose.FilterQuery<any> {
+    const matchQuery: mongoose.FilterQuery<any> = {};
+    if (params.q !== undefined) {
+      matchQuery.title = { $regex: params.q, $options: "i" };
+    } else if (params.activityIds?.length) {
+      matchQuery._id = {
+        $in: params.activityIds.map((id) => new mongoose.Types.ObjectId(id)),
+      };
+    } else if (params.rating !== undefined) {
+      matchQuery.rating = { $gte: params.rating };
+    } else if (params.specialOffer !== undefined) {
+      matchQuery.specialOffer = params.specialOffer;
+    } else if (params.priceRange?.length === 2) {
+      const [minPrice, maxPrice] = params.priceRange;
+      matchQuery.price = { $gte: minPrice, $lte: maxPrice };
+    }
+    return matchQuery;
   }
 
-  private filterByRating(
-    activities: Array<Activity>,
-    rating: number
-  ): Array<Activity> {
-    return activities.filter((activity: Activity) => {
-      if (rating) {
-        const selectedRating =
-          typeof rating === "string" ? parseInt(rating) : rating;
-        return Math.round(activity.rating) >= selectedRating;
-      }
-      return true;
-    });
-  }
-
-  private filterBySpecialOffer(
-    activities: Array<Activity>,
-    specialOffer: boolean
-  ): Array<Activity> {
-    return activities.filter(
-      (activity) => activity.specialOffer === specialOffer
-    );
-  }
-
-  private filterByPriceRange(
-    activities: Array<Activity>,
-    priceRange: [number, number]
-  ): Array<Activity> {
-    const [minPrice, maxPrice] = priceRange;
-    return activities.filter(
-      (activity) => activity.price >= minPrice && activity.price <= maxPrice
-    );
-  }
-
-  private filterByTitle(
-    activities: Array<Activity>,
-    title: string
-  ): Array<Activity> {
-    const lowerCaseTitle = title.toLowerCase();
-    return activities.filter((activity) =>
-      activity.title.toLowerCase().includes(lowerCaseTitle)
-    );
+  private applySorting(
+    aggregateOptions: mongoose.PipelineStage[],
+    params: FetchActivitiesParams
+  ) {
+    if (params.rating !== undefined) {
+      aggregateOptions.push({
+        $sort: {
+          rating: -1,
+        },
+      });
+    } else if (params.priceRange?.length === 2) {
+      aggregateOptions.push({
+        $sort: {
+          price: 1,
+        },
+      });
+    }
   }
 }
 
