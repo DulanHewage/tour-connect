@@ -27,7 +27,7 @@ class ActivityService {
             from: "suppliers",
             localField: "supplierId",
             foreignField: "_id",
-            as: "supplierDetails",
+            as: "supplier",
           },
         },
       ];
@@ -48,6 +48,11 @@ class ActivityService {
       aggregateOptions.push({ $limit: pageSize });
 
       const activities = await ActivityModel.aggregate(aggregateOptions);
+
+      // Extract the first supplier object from the supplier array for each activity
+      activities.forEach((activity) => {
+        activity.supplier = activity.supplier[0];
+      });
 
       const totalItems = await ActivityModel.countDocuments(matchQuery);
       const pagination: Pagination = {
