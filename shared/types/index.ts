@@ -32,7 +32,6 @@ export interface FetchActivitiesParams {
   specialOffer?: boolean;
   priceRange?: [number, number];
   q?: string;
-  // TODO: Add pagination properties
   page?: number;
   limit?: number;
   pageSize?: number;

@@ -12,7 +12,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@nuxt/image": "^1.7.0",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@vueuse/core": "^10.11.0",
-    "@vueuse/nuxt": "^10.11.0"
+    "@vueuse/nuxt": "^10.11.0",
+    "cypress": "^13.13.3"
   }
 }

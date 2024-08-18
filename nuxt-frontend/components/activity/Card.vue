@@ -17,6 +17,7 @@ const title = computed(() => {
   <div
     class="w-full block shadow rounded-md border border-gray-300/50 hover:border-sky-500/50 hover:shadow-sm transition-all"
     v-if="activity"
+    data-testid="activity-card"
   >
     <div class="flex flex-col md:flex-row">
       <div class="w-100 md:w-4/12 relative">

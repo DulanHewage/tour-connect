@@ -16,7 +16,10 @@
           Showing {{ activities.length }} of
           {{ pagination?.totalItems ? pagination?.totalItems : 0 }} activities
         </div>
-        <div class="pb-6 flex flex-col gap-6">
+        <div
+          class="pb-6 flex flex-col gap-6"
+          data-testid="activity-card-wrapper"
+        >
           <ActivityCard
             v-for="activity in activities"
             :key="activity._id"
