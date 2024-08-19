@@ -40,7 +40,9 @@
             `star${parseInt(filters.selectedRating as string) > 1 ? "s" : ""}`
           }}</BaseTag
         >
-        <BaseTag v-if="filters.specialOffer">special offer</BaseTag>
+        <BaseTag v-if="filters.specialOffer" data-testid="special-offer-tag"
+          >special offer</BaseTag
+        >
       </div>
     </div>
   </div>
@@ -48,7 +50,6 @@
 
 <script setup lang="ts">
 const { filters, clearFilters } = useActivityStore();
-
 // checks if any filters are applied
 const hasFiltersApplied = computed<boolean>(() => {
   return filters.selectedRating !== "" || filters.specialOffer;

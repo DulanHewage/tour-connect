@@ -13,5 +13,9 @@
     "email": "dulanhewage2@hotmail.com",
     "url": "https://dulan.me"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "workspaces": [
+    "nuxt-frontend",
+    "express-backend"
+  ]
 }

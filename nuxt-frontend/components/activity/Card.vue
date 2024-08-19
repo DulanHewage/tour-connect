@@ -21,7 +21,11 @@ const title = computed(() => {
   >
     <div class="flex flex-col md:flex-row">
       <div class="w-100 md:w-4/12 relative">
-        <ActivityRibbon v-if="activity.specialOffer">Offer!</ActivityRibbon>
+        <ActivityRibbon
+          v-if="activity.specialOffer"
+          data-testid="special-offer-ribbon"
+          >Offer!</ActivityRibbon
+        >
         <NuxtImg
           :src="`activities/${activity._id}.png`"
           :alt="activity.title"

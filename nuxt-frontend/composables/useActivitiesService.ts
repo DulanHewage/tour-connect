@@ -6,27 +6,27 @@ import type {
   Pagination,
 } from "../../shared/types";
 
+import { useActivityStore } from "@/stores/activityStore";
+
 export const useActivityService = () => {
   const { apiBase } = useAPIBase();
   const activities = ref<Activity[] | []>([]);
-  const searchFilters = ref<ActivityFilter>({
-    searchQuery: "",
-    price: 0,
-    selectedRating: 0,
-    specialOffer: false,
-  });
 
   /**
    * Fetches activities based on the current search filters.
    * @returns {Promise<{ activities: Ref<Activity[]>; pagination: Pagination | null; error: any; status: any; refresh: any }>}
    */
-  const getActivities = async () => {
+  const getActivities = async (filters: ActivityFilter) => {
+    activities.value = [];
     const { data, error, status, refresh } = await useAsyncData(
       "activity-grid",
       async () => {
         const query: SearchQuery = {};
-        if (searchFilters.value.searchQuery) {
-          query["q"] = searchFilters.value.searchQuery;
+        if (filters.searchQuery) {
+          query["q"] = filters.searchQuery;
+        }
+        if (filters.specialOffer) {
+          query["specialOffer"] = filters.specialOffer;
         }
         return $fetch<JSONResponse<Activity[]>>(`${apiBase}/activities`, {
           query: query,
@@ -35,8 +35,8 @@ export const useActivityService = () => {
     );
     let pagination: Pagination | null = null;
     // sets the suppliers & activities state
-    if (data.value) {
-      activities.value = data.value.result;
+    if (data.value && data.value.result?.length) {
+      activities.value = [...data.value.result];
       pagination = data.value.metadata?.pagination || null;
     }
 
@@ -49,7 +49,9 @@ export const useActivityService = () => {
    * @returns {Promise<Activity | undefined>} The activity if found, otherwise undefined.
    */
   const getActivityById = async (id: string): Promise<Activity | undefined> => {
-    let activity = activities.value.find(
+    const { activitiesResult } = useActivityStore();
+
+    let activity = activitiesResult.find(
       (activity: Activity) => activity._id === id
     );
     if (!activity) {
@@ -67,17 +69,5 @@ export const useActivityService = () => {
     return activity;
   };
 
-  /**
-   * Debounced function to fetch activities.
-   */
-  const debouncedGetActivities = useDebounceFn(async () => {
-    await getActivities();
-  }, 500);
-
-  // Watch for changes in search filters and fetch activities accordingly
-  watch(searchFilters.value, async () => {
-    await debouncedGetActivities();
-  });
-
-  return { getActivities, getActivityById, searchFilters };
+  return { getActivities, getActivityById, activities };
 };

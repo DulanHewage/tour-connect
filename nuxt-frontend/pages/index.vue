@@ -7,7 +7,7 @@
     </aside>
     <div class="w-full md:w-9/12">
       <BaseTextfield
-        v-model="searchFilters.searchQuery"
+        v-model="filters.searchQuery"
         placeholder="Search Activity"
       />
       <div v-if="status === 'pending'">loading...</div>
@@ -30,7 +30,9 @@
             class="flex gap-2 items-center w-full justify-center mt-2"
           >
             <NuxtIcon name="cart-empty" class="text-xl" />
-            <span>No activities found for the search.</span>
+            <span data-testid="no-activities-message"
+              >No activities found for the search.</span
+            >
           </div>
         </div>
       </div>
@@ -40,13 +42,25 @@
 </template>
 
 <script setup lang="ts">
-const { setActivities } = useActivityStore();
-const { getActivities, searchFilters } = useActivityService();
+const { setActivities, filters } = useActivityStore();
+const { getActivities, activities } = useActivityService();
 
-const { activities, pagination, error, status } = await getActivities();
+const { pagination, error, status } = await getActivities(filters);
+
+const debouncedGetActivities = useDebounceFn(async () => {
+  await getActivities(filters);
+  setActivities(activities.value);
+  console.log("filters changed");
+}, 500);
+
+watch(filters, async () => {
+  await debouncedGetActivities();
+});
 
 onMounted(() => {
   // sets the activities in the store
+  // so when single activity page is opened
+  // it doesn't make an API call again
   setActivities(activities.value);
 });
 </script>

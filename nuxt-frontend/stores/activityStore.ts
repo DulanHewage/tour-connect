@@ -1,6 +1,6 @@
 import type { Activity, ActivityFilter } from "../../shared/types";
 export const useActivityStore = defineStore("activity", () => {
-  const activities = ref<Activity[]>([]);
+  const activitiesResult = ref<Activity[]>([]);
   const filters = reactive<ActivityFilter>({
     searchQuery: "",
     selectedRating: "",
@@ -14,7 +14,7 @@ export const useActivityStore = defineStore("activity", () => {
    */
   function setActivities(newActivities: Activity[] | null) {
     if (newActivities && newActivities.length)
-      activities.value = [...newActivities];
+      activitiesResult.value = [...newActivities];
   }
   /**
    * Clears all the filters by resetting their values.
@@ -26,7 +26,7 @@ export const useActivityStore = defineStore("activity", () => {
   }
 
   return {
-    activities,
+    activitiesResult,
     setActivities,
     filters,
     clearFilters,
