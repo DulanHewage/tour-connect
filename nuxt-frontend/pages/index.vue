@@ -37,19 +37,26 @@
         </div>
       </div>
       <div v-if="error">error occurred while fetching activities</div>
+      <div>
+        <!-- <button @click="prev">prev</button>
+        <button @click="next">next</button> -->
+        <div>currentPage: {{ pagination?.currentPage }}</div>
+        <div>currentPageSize: {{ pagination?.pageSize }}</div>
+        <div>pageCount: {{ pagination?.totalItems }}</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const { setActivities, filters } = useActivityStore();
+const { setActivitiesResult, filters } = useActivityStore();
 const { getActivities, activities } = useActivityService();
 
 const { pagination, error, status } = await getActivities(filters);
 
 const debouncedGetActivities = useDebounceFn(async () => {
   await getActivities(filters);
-  setActivities(activities.value);
+  setActivitiesResult(activities.value);
   console.log("filters changed");
 }, 500);
 
@@ -61,6 +68,6 @@ onMounted(() => {
   // sets the activities in the store
   // so when single activity page is opened
   // it doesn't make an API call again
-  setActivities(activities.value);
+  setActivitiesResult(activities.value);
 });
 </script>

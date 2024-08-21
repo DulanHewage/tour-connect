@@ -21,6 +21,8 @@ export interface ActivityFilter {
   selectedRating: number | string;
   specialOffer: boolean;
   price: number;
+  page?: number;
+  pageSize?: number;
 }
 export interface ErrorResponse {
   message: string;
@@ -33,7 +35,6 @@ export interface FetchActivitiesParams {
   priceRange?: [number, number];
   q?: string;
   page?: number;
-  limit?: number;
   pageSize?: number;
 }
 export interface SearchQuery {

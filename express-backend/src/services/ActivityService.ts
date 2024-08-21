@@ -55,8 +55,12 @@ class ActivityService {
       });
 
       const totalItems = await ActivityModel.countDocuments(matchQuery);
+      const totalPages = Math.ceil(totalItems / pageSize);
       const pagination: Pagination = {
         totalItems,
+        currentPage: page,
+        totalPages,
+        pageSize,
       };
 
       return createJSONResponse(activities, pagination);

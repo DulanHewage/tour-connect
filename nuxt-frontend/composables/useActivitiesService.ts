@@ -1,7 +1,7 @@
 import type {
   Activity,
   ActivityFilter,
-  SearchQuery,
+  FetchActivitiesParams,
   JSONResponse,
   Pagination,
 } from "../../shared/types";
@@ -21,12 +21,18 @@ export const useActivityService = () => {
     const { data, error, status, refresh } = await useAsyncData(
       "activity-grid",
       async () => {
-        const query: SearchQuery = {};
+        const query: FetchActivitiesParams = {};
         if (filters.searchQuery) {
           query["q"] = filters.searchQuery;
         }
         if (filters.specialOffer) {
           query["specialOffer"] = filters.specialOffer;
+        }
+        if (filters.page) {
+          query["page"] = filters.page;
+        }
+        if (filters.pageSize) {
+          query["pageSize"] = filters.pageSize;
         }
         return $fetch<JSONResponse<Activity[]>>(`${apiBase}/activities`, {
           query: query,

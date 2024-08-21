@@ -12,7 +12,7 @@ export const useActivityStore = defineStore("activity", () => {
    * Sets the activities array to a new array of activities.
    * @param newActivities - An array of Activity objects or null.
    */
-  function setActivities(newActivities: Activity[] | null) {
+  function setActivitiesResult(newActivities: Activity[] | null) {
     if (newActivities && newActivities.length)
       activitiesResult.value = [...newActivities];
   }
@@ -27,7 +27,7 @@ export const useActivityStore = defineStore("activity", () => {
 
   return {
     activitiesResult,
-    setActivities,
+    setActivitiesResult,
     filters,
     clearFilters,
   };
