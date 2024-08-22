@@ -6,6 +6,7 @@ export const useActivityStore = defineStore("activity", () => {
     selectedRating: "",
     specialOffer: false,
     price: 0,
+    currentPage: 1,
   });
 
   /**

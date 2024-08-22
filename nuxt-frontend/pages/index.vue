@@ -16,6 +16,12 @@
           Showing {{ activities.length }} of
           {{ pagination?.totalItems ? pagination?.totalItems : 0 }} activities
         </div>
+        <BasePagination
+          v-model="filters.currentPage"
+          @change="onChangePage"
+          :page-size="10"
+          :total-items="pagination?.totalItems ? pagination?.totalItems : 0"
+        />
         <div
           class="pb-6 flex flex-col gap-6"
           data-testid="activity-card-wrapper"
@@ -37,27 +43,22 @@
         </div>
       </div>
       <div v-if="error">error occurred while fetching activities</div>
-      <div>
-        <!-- <button @click="prev">prev</button>
-        <button @click="next">next</button> -->
-        <div>currentPage: {{ pagination?.currentPage }}</div>
-        <div>currentPageSize: {{ pagination?.pageSize }}</div>
-        <div>pageCount: {{ pagination?.totalItems }}</div>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const { setActivitiesResult, filters } = useActivityStore();
-const { getActivities, activities } = useActivityService();
+const { getActivities, activities, pagination } = useActivityService();
 
-const { pagination, error, status } = await getActivities(filters);
+// fetching activities on sever side
+let { error, status } = await getActivities(filters);
 
 const debouncedGetActivities = useDebounceFn(async () => {
-  await getActivities(filters);
+  const result = await getActivities(filters);
+  error = result.error;
+  status = result.status;
   setActivitiesResult(activities.value);
-  console.log("filters changed");
 }, 500);
 
 watch(filters, async () => {
@@ -70,4 +71,9 @@ onMounted(() => {
   // it doesn't make an API call again
   setActivitiesResult(activities.value);
 });
+
+function onChangePage(page: number) {
+  // getActivities({ ...filters, page });
+  console.log("page changed", page);
+}
 </script>

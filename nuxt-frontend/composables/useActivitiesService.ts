@@ -11,7 +11,7 @@ import { useActivityStore } from "@/stores/activityStore";
 export const useActivityService = () => {
   const { apiBase } = useAPIBase();
   const activities = ref<Activity[] | []>([]);
-
+  const pagination = ref<Pagination | null>(null);
   /**
    * Fetches activities based on the current search filters.
    * @returns {Promise<{ activities: Ref<Activity[]>; pagination: Pagination | null; error: any; status: any; refresh: any }>}
@@ -28,8 +28,8 @@ export const useActivityService = () => {
         if (filters.specialOffer) {
           query["specialOffer"] = filters.specialOffer;
         }
-        if (filters.page) {
-          query["page"] = filters.page;
+        if (filters.currentPage) {
+          query["page"] = filters.currentPage;
         }
         if (filters.pageSize) {
           query["pageSize"] = filters.pageSize;
@@ -39,14 +39,17 @@ export const useActivityService = () => {
         });
       }
     );
-    let pagination: Pagination | null = null;
     // sets the suppliers & activities state
-    if (data.value && data.value.result?.length) {
+    if (
+      data.value &&
+      data.value.result?.length &&
+      data.value.metadata?.pagination
+    ) {
       activities.value = [...data.value.result];
-      pagination = data.value.metadata?.pagination || null;
+      pagination.value = { ...data.value.metadata.pagination };
     }
 
-    return { activities, pagination, error, status, refresh };
+    return { error, status, refresh };
   };
 
   /**
@@ -75,5 +78,5 @@ export const useActivityService = () => {
     return activity;
   };
 
-  return { getActivities, getActivityById, activities };
+  return { getActivities, getActivityById, activities, pagination };
 };
