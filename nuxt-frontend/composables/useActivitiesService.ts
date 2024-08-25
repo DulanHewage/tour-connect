@@ -32,6 +32,7 @@ export const useActivityService = () => {
       "activity-grid",
       async () => {
         const query: FetchActivitiesParams = {};
+        // Set the query parameters based on the filters
         if (filters.searchQuery) {
           query["q"] = filters.searchQuery;
         }
@@ -44,6 +45,7 @@ export const useActivityService = () => {
         if (filters.pageSize) {
           query["pageSize"] = filters.pageSize;
         }
+        // Fetch the activities from the API
         return $fetch<JSONResponse<Activity[]>>(`${apiBase}/activities`, {
           query: query,
         });
@@ -55,10 +57,11 @@ export const useActivityService = () => {
       data.value.result?.length &&
       data.value.metadata?.pagination
     ) {
+      // Set the activities and pagination state
       activities.value = [...data.value.result];
       pagination.value = { ...data.value.metadata.pagination };
     }
-
+    // Return the error, status, and refresh function from the useAsyncData composable
     return { error, status, refresh };
   };
 
