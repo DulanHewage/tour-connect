@@ -9,19 +9,24 @@
       <BaseTextfield
         v-model="filters.searchQuery"
         placeholder="Search Activity"
+        @update:modelValue="filters.currentPage = 1"
       />
-      <div v-if="status === 'pending'">loading...</div>
-      <div v-else>
+
+      <div class="flex justify-between">
         <div class="pt-4 pb-2 text-gray-600 text-sm">
           Showing {{ activities.length }} of
           {{ pagination?.totalItems ? pagination?.totalItems : 0 }} activities
         </div>
         <BasePagination
+          hide-buttons
           v-model="filters.currentPage"
           @change="onChangePage"
           :page-size="10"
           :total-items="pagination?.totalItems ? pagination?.totalItems : 0"
         />
+      </div>
+      <div v-if="status === 'pending'">loading...</div>
+      <div v-else>
         <div
           class="pb-6 flex flex-col gap-6"
           data-testid="activity-card-wrapper"
@@ -43,6 +48,14 @@
         </div>
       </div>
       <div v-if="error">error occurred while fetching activities</div>
+      <div class="w-full flex justify-center pb-6">
+        <BasePagination
+          v-model="filters.currentPage"
+          @change="onChangePage"
+          :page-size="10"
+          :total-items="pagination?.totalItems ? pagination?.totalItems : 0"
+        />
+      </div>
     </div>
   </div>
 </template>

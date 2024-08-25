@@ -1,27 +1,37 @@
 <template>
-  <div class="flex items-center space-x-2">
-    <button
+  <div class="flex items-center space-x-2 text-sm gap-1">
+    <BaseButton
+      size="small"
+      variant="text"
       @click="onChangePage({ action: 'prev' })"
       :disabled="currentPageRef === 1"
     >
-      Prev
-    </button>
+      <NuxtIcon name="next" class="rotate-180 block" />
+    </BaseButton>
 
-    <button
-      v-for="page in pageButtons"
-      :key="page"
-      @click="onChangePage({ page })"
-      :class="{ 'bg-blue-500': currentPageRef === page }"
-    >
-      {{ page }}
-    </button>
-    <button
+    <div class="flex gap-2">
+      <div class="text-gray-600" v-if="hideButtons">
+        Page {{ currentPageRef }} of {{ totalPages }}
+      </div>
+      <BaseButton
+        v-else
+        size="small"
+        :variant="currentPageRef === page ? 'primary' : 'stroke'"
+        v-for="page in pageButtons"
+        :key="page"
+        @click="onChangePage({ page })"
+      >
+        {{ page }}
+      </BaseButton>
+    </div>
+    <BaseButton
+      size="small"
+      variant="text"
       @click="onChangePage({ action: 'next' })"
       :disabled="currentPageRef === totalPages"
     >
-      Next
-    </button>
-    <div>Page {{ currentPageRef }} of {{ totalPages }}</div>
+      <NuxtIcon name="next" />
+    </BaseButton>
   </div>
 </template>
 
@@ -32,6 +42,7 @@ const props = defineProps<{
   modelValue: number;
   pageSize: number;
   totalItems: number;
+  hideButtons?: boolean;
 }>();
 
 const emit = defineEmits(["change", "update:modelValue"]);
