@@ -6,8 +6,10 @@ export const useActivityStore = defineStore("activity", () => {
     selectedRating: "",
     specialOffer: false,
     price: 0,
-    currentPage: 1,
   });
+
+  const currentPage = ref(1);
+
   /**
    * Sets the activities array to a new array of activities.
    * @param newActivities - An array of Activity objects or null.
@@ -38,7 +40,11 @@ export const useActivityStore = defineStore("activity", () => {
     filters.selectedRating = "";
     filters.specialOffer = false;
     filters.price = 0;
-    filters.currentPage = 1;
+    currentPage.value = 1;
+  }
+
+  function setCurrentPage(page: number) {
+    currentPage.value = page;
   }
 
   return {
@@ -47,5 +53,7 @@ export const useActivityStore = defineStore("activity", () => {
     filters,
     clearFilters,
     setFilters,
+    currentPage,
+    setCurrentPage,
   };
 });

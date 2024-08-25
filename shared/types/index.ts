@@ -21,7 +21,6 @@ export interface ActivityFilter {
   selectedRating: number | string;
   specialOffer: boolean;
   price: number;
-  currentPage: number;
   pageSize?: number;
 }
 export interface ErrorResponse {

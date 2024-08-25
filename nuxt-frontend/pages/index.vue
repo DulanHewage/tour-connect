@@ -9,7 +9,7 @@
       <BaseTextfield
         v-model="filters.searchQuery"
         placeholder="Search Activity"
-        @update:modelValue="filters.currentPage = 1"
+        @update:modelValue="currentPage = 1"
       />
 
       <div class="flex justify-between">
@@ -20,7 +20,7 @@
         </div>
         <BasePagination
           hide-buttons
-          v-model="filters.currentPage"
+          v-model="currentPage"
           @change="onChangePage"
           :page-size="10"
           :total-items="pagination?.totalItems ? pagination?.totalItems : 0"
@@ -51,7 +51,7 @@
       <div v-if="error">error occurred while fetching activities</div>
       <div class="w-full flex justify-center pb-6">
         <BasePagination
-          v-model="filters.currentPage"
+          v-model="currentPage"
           @change="onChangePage"
           :page-size="10"
           :total-items="pagination?.totalItems ? pagination?.totalItems : 0"
@@ -62,20 +62,29 @@
 </template>
 
 <script setup lang="ts">
-const { setActivitiesResult, filters } = useActivityStore();
-const { getActivities, activities, pagination } = useActivityService();
+const { setActivitiesResult, filters, setCurrentPage } = useActivityStore();
+const { setActivities, activities, pagination } = useActivityService();
 
+const currentPage = ref(1);
 // fetching activities on sever side
-let { error, status } = await getActivities(filters);
+let { error, status } = await setActivities(filters, currentPage.value);
 
 const debouncedGetActivities = useDebounceFn(async () => {
-  const result = await getActivities(filters);
+  const result = await setActivities(filters, currentPage.value);
   error = result.error;
   status = result.status;
   setActivitiesResult(activities.value);
 }, 500);
 
+async function onChangePage(page: number) {
+  // getActivities({ ...filters, page });
+  setCurrentPage(page);
+  await debouncedGetActivities();
+}
+
 watch(filters, async () => {
+  setCurrentPage(1);
+  currentPage.value = 1;
   await debouncedGetActivities();
 });
 
@@ -85,9 +94,4 @@ onMounted(() => {
   // it doesn't make an API call again
   setActivitiesResult(activities.value);
 });
-
-function onChangePage(page: number) {
-  // getActivities({ ...filters, page });
-  console.log("page changed", page);
-}
 </script>

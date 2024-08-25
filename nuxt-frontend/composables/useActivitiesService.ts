@@ -13,10 +13,20 @@ export const useActivityService = () => {
   const { activitiesResult } = useActivityStore();
   const pagination = ref<Pagination | null>(null);
   /**
-   * Fetches activities based on the current search filters.
-   * @returns {Promise<{ activities: Ref<Activity[]>; pagination: Pagination | null; error: any; status: any; refresh: any }>}
+   * Fetches activities based on the current search filters and updates the activities and pagination state.
+   *
+   * @param {ActivityFilter} filters - The filters to apply to the activity search.
+   * @param {number} currentPage - The current page number for pagination.
+   * @returns {Promise<{
+   *   error: any;
+   *   status: any;
+   *   refresh: any
+   * }>} - An object containing the error, status, and refresh function.
    */
-  const getActivities = async (filters: ActivityFilter) => {
+  const setActivities = async (
+    filters: ActivityFilter,
+    currentPage: number
+  ) => {
     activities.value = [];
     const { data, error, status, refresh } = await useAsyncData(
       "activity-grid",
@@ -28,8 +38,8 @@ export const useActivityService = () => {
         if (filters.specialOffer) {
           query["specialOffer"] = filters.specialOffer;
         }
-        if (filters.currentPage) {
-          query["page"] = filters.currentPage;
+        if (currentPage) {
+          query["page"] = currentPage;
         }
         if (filters.pageSize) {
           query["pageSize"] = filters.pageSize;
@@ -46,7 +56,6 @@ export const useActivityService = () => {
       data.value.metadata?.pagination
     ) {
       activities.value = [...data.value.result];
-      // setPagination({ ...data.value.metadata.pagination });
       pagination.value = { ...data.value.metadata.pagination };
     }
 
@@ -77,5 +86,5 @@ export const useActivityService = () => {
     return activity;
   };
 
-  return { getActivities, getActivityById, activities, pagination };
+  return { setActivities, getActivityById, activities, pagination };
 };
