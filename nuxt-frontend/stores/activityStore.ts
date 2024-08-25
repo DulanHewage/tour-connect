@@ -8,7 +8,6 @@ export const useActivityStore = defineStore("activity", () => {
     price: 0,
     currentPage: 1,
   });
-
   /**
    * Sets the activities array to a new array of activities.
    * @param newActivities - An array of Activity objects or null.
@@ -17,6 +16,20 @@ export const useActivityStore = defineStore("activity", () => {
     if (newActivities && newActivities.length)
       activitiesResult.value = [...newActivities];
   }
+
+  /**
+   * Updates individual fields of the filters object.
+   * @param newFilters - An object containing the new filter values.
+   */
+  function setFilters(newFilters: Partial<ActivityFilter>) {
+    Object.keys(newFilters).forEach((key) => {
+      const filterKey = key as keyof ActivityFilter;
+      if (filterKey in filters) {
+        (filters[filterKey] as any) = newFilters[filterKey]!;
+      }
+    });
+  }
+
   /**
    * Clears all the filters by resetting their values.
    */
@@ -25,6 +38,7 @@ export const useActivityStore = defineStore("activity", () => {
     filters.selectedRating = "";
     filters.specialOffer = false;
     filters.price = 0;
+    filters.currentPage = 1;
   }
 
   return {
@@ -32,5 +46,6 @@ export const useActivityStore = defineStore("activity", () => {
     setActivitiesResult,
     filters,
     clearFilters,
+    setFilters,
   };
 });

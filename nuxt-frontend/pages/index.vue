@@ -15,7 +15,8 @@
       <div class="flex justify-between">
         <div class="pt-4 pb-2 text-gray-600 text-sm">
           Showing {{ activities.length }} of
-          {{ pagination?.totalItems ? pagination?.totalItems : 0 }} activities
+          {{ pagination?.totalItems ? pagination?.totalItems : 0 }}
+          activities
         </div>
         <BasePagination
           hide-buttons

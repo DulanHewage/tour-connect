@@ -7,10 +7,10 @@ import type {
 } from "../../shared/types";
 
 import { useActivityStore } from "@/stores/activityStore";
-
 export const useActivityService = () => {
   const { apiBase } = useAPIBase();
   const activities = ref<Activity[] | []>([]);
+  const { activitiesResult } = useActivityStore();
   const pagination = ref<Pagination | null>(null);
   /**
    * Fetches activities based on the current search filters.
@@ -46,6 +46,7 @@ export const useActivityService = () => {
       data.value.metadata?.pagination
     ) {
       activities.value = [...data.value.result];
+      // setPagination({ ...data.value.metadata.pagination });
       pagination.value = { ...data.value.metadata.pagination };
     }
 
@@ -58,8 +59,6 @@ export const useActivityService = () => {
    * @returns {Promise<Activity | undefined>} The activity if found, otherwise undefined.
    */
   const getActivityById = async (id: string): Promise<Activity | undefined> => {
-    const { activitiesResult } = useActivityStore();
-
     let activity = activitiesResult.find(
       (activity: Activity) => activity._id === id
     );
