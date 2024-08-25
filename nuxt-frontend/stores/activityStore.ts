@@ -21,6 +21,7 @@ export const useActivityStore = defineStore("activity", () => {
    * Clears all the filters by resetting their values.
    */
   function clearFilters() {
+    filters.searchQuery = "";
     filters.selectedRating = "";
     filters.specialOffer = false;
     filters.price = 0;

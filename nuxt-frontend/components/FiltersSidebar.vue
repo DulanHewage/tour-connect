@@ -50,10 +50,16 @@
 
 <script setup lang="ts">
 const { filters, clearFilters } = useActivityStore();
-// checks if any filters are applied
+
+// computed property to check if any filters are applied
 const hasFiltersApplied = computed<boolean>(() => {
-  return filters.selectedRating !== "" || filters.specialOffer;
+  return (
+    filters.selectedRating !== "" ||
+    filters.specialOffer ||
+    filters.searchQuery.trim() !== ""
+  );
 });
+
 // used to force re-render of radio buttons
 const radioButtonKey = ref(0);
 
