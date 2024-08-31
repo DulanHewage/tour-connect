@@ -26,8 +26,15 @@ const title = computed(() => {
           data-testid="special-offer-ribbon"
           >Offer!</ActivityRibbon
         >
-        <NuxtImg
+        <!-- <NuxtImg
           :src="`activities/${activity._id}.png`"
+          :alt="activity.title"
+          class="h-[200px] w-full object-cover"
+          placeholder
+          loading="lazy"
+        /> -->
+        <NuxtImg
+          src="/activities/placeholder-image.jpg"
           :alt="activity.title"
           class="h-[200px] w-full object-cover"
           placeholder
