@@ -15,6 +15,7 @@ The project is divided into three main parts:
 ### Prerequisites
 
 - Node.js (v16 or higher)
+- MongoDB
 - Docker (optional, for containerized deployment)
 
 ### Get started
