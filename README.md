@@ -17,16 +17,16 @@ The project is divided into three main parts:
 - Node.js (v16 or higher)
 - Docker (optional, for containerized deployment)
 
-### Installation
+### Get started
 
-To get started, clone the repository:
+#### clone the repository:
 
 ```sh
 git clone https://github.com/DulanHewage/tour-connect.git
 cd tour-connect
 ```
 
-#### Adding Database Connection
+### Adding Database Connection
 
 To connect to the MongoDB database, follow these steps:
 
@@ -39,7 +39,7 @@ To connect to the MongoDB database, follow these steps:
 
 Replace `"your-mongodb-uri"` with your actual MongoDB connection string.
 
-#### Seeding database
+### Seeding database
 
 To seed the database with dummy data, follow these steps:
 
@@ -57,7 +57,7 @@ To seed the database with dummy data, follow these steps:
 
 This will connect to the database, delete existing documents, and insert the dummy data for suppliers and activities.
 
-#### Development
+### Development
 
 1. Install dependencies and run the backend development server:
 
@@ -75,7 +75,7 @@ npm install
 npm run dev
 ```
 
-#### Production
+### Production
 
 To build and start the production servers, follow these steps:
 
