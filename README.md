@@ -26,6 +26,37 @@ git clone https://github.com/DulanHewage/tour-connect.git
 cd tour-connect
 ```
 
+#### Adding Database Connection
+
+To connect to the MongoDB database, follow these steps:
+
+1. Create a `.env` file in the `express-backend` directory.
+2. Add the MongoDB URI to the `.env` file:
+
+   ```env
+   MONGO_URI="your-mongodb-uri"
+   ```
+
+Replace `"your-mongodb-uri"` with your actual MongoDB connection string.
+
+#### Seeding database
+
+To seed the database with dummy data, follow these steps:
+
+1. Navigate to the `express-backend` directory:
+
+   ```sh
+   cd express-backend
+   ```
+
+2. Run the seed command:
+
+   ```sh
+   npm run seed
+   ```
+
+This will connect to the database, delete existing documents, and insert the dummy data for suppliers and activities.
+
 #### Development
 
 1. Install dependencies and run the backend development server:
