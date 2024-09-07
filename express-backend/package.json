@@ -11,6 +11,7 @@
     "url": "https://dulan.me"
   },
   "scripts": {
+    "start": "node dist/express-backend/src/server.js",
     "build": "tsc && copyfiles -u 1 src/static/**/* dist/express-backend/src",
     "dev": "nodemon",
     "lint": "eslint . --fix",
