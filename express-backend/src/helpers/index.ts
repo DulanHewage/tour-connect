@@ -45,17 +45,12 @@ export function commaSeparatedStringToArray(
   return [];
 }
 
-export function createJSONResponse<T>(
-  result: T,
-  pagination: Pagination | null = null,
-  error: ErrorResponse | null = null
-): JSONResponse<T> {
+export function createJSONResponse(result: any, pagination?: Pagination) {
   return {
     result,
     metadata: {
       timestamp: new Date().toISOString(),
-      pagination: pagination || undefined,
+      ...(pagination && { pagination }),
     },
-    error,
   };
 }

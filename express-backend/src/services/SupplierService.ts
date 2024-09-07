@@ -1,6 +1,3 @@
-import * as fs from "fs/promises";
-import * as path from "path";
-import { fileURLToPath } from "url";
 import { Supplier } from "../../../shared/types/index.js";
 import { SupplierModel } from "../models/SupplierModel.js";
 
