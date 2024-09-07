@@ -5,6 +5,7 @@ import {
   commaSeparatedStringToArray,
 } from "../helpers/index.js";
 import { FetchActivitiesParams } from "../../../shared/types/index.js";
+import { fetchActivitiesSchema } from "../validations/activityValidations.js";
 
 const activityService = new ActivityService();
 
@@ -19,15 +20,25 @@ class ActivityController {
    */
   static async fetchActivities(req: Request, res: Response): Promise<void> {
     try {
+      const { error, value } = fetchActivitiesSchema.validate(req.query);
+
+      if (error) {
+        throw new Error(`Invalid input: ${error.details[0].message}`);
+      }
+
       const fetchActivitiesParams: FetchActivitiesParams =
-        ActivityController.buildFetchActivitiesParams(req);
+        ActivityController.buildFetchActivitiesParams(value);
 
       const activities = await activityService.fetchActivities(
         fetchActivitiesParams
       );
       res.status(200).json(activities);
     } catch (error) {
-      handleErrorResponse(error, res);
+      if (error instanceof Error) {
+        handleErrorResponse(error, res, 400);
+      } else {
+        handleErrorResponse("An unexpected error occurred", res);
+      }
     }
   }
 
@@ -37,31 +48,24 @@ class ActivityController {
    * @param {Request} req - The request object containing query parameters.
    * @returns {FetchActivitiesParams} The constructed FetchActivitiesParams object.
    */
-  private static buildFetchActivitiesParams(
-    req: Request
-  ): FetchActivitiesParams {
+  private static buildFetchActivitiesParams(query: any): FetchActivitiesParams {
     const fetchActivitiesParams: FetchActivitiesParams = {
-      rating: req.query.rating ? Number(req.query.rating) : undefined,
-      specialOffer: req.query.specialOffer === "true" ? true : undefined,
-      q: req.query.q as string,
+      rating: query.rating ? Number(query.rating) : undefined,
+      specialOffer: query.specialOffer === "true" ? true : undefined,
+      q: query.q,
+      page: query.page ? Number(query.page) : undefined,
+      pageSize: query.pageSize ? Number(query.pageSize) : undefined,
     };
 
-    if (typeof req.query.activityIds === "string") {
+    if (query.activityIds) {
       fetchActivitiesParams.activityIds = commaSeparatedStringToArray(
-        req.query.activityIds
+        query.activityIds
       );
     }
-    if (typeof req.query.priceRange === "string") {
-      const priceRange = req.query.priceRange.split(",").map(Number);
-      if (priceRange.length === 2) {
-        fetchActivitiesParams.priceRange = [priceRange[0], priceRange[1]];
-      }
-    }
-    if (typeof req.query.page === "string") {
-      fetchActivitiesParams.page = Number(req.query.page);
-    }
-    if (typeof req.query.pageSize === "string") {
-      fetchActivitiesParams.pageSize = Number(req.query.pageSize);
+
+    if (query.priceRange) {
+      const [minPrice, maxPrice] = query.priceRange.split(",").map(Number);
+      fetchActivitiesParams.priceRange = [minPrice, maxPrice];
     }
 
     return fetchActivitiesParams;
