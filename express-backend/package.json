@@ -25,6 +25,7 @@
     "joi": "^17.13.3",
     "mongoose": "^8.5.2",
     "morgan": "^1.10.0",
+    "node-cache": "^5.1.2",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
