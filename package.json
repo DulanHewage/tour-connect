@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "workspaces": [
-    "nuxt-frontend",
-    "express-backend"
-  ],
   "scripts": {
     "dev": "npm run dev --workspace=nuxt-frontend & npm run dev --workspace=express-backend",
     "start:client": "npm install --workspace=nuxt-frontend && npm run build --workspace=nuxt-frontend && node nuxt-frontend/.output/server/index.mjs",
