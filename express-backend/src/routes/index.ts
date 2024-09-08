@@ -14,6 +14,7 @@ const v1Router = express.Router();
 
 v1Router.get("/activities", ActivityController.fetchActivities);
 v1Router.get("/suppliers", SupplierController.fetchSuppliers);
+v1Router.get("/activities/stats", ActivityController.getActivityStats);
 
 // Mount v1 routes under /api/v1
 router.use("/api/v1", v1Router);

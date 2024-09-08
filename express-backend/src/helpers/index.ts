@@ -45,7 +45,10 @@ export function commaSeparatedStringToArray(
   return [];
 }
 
-export function createJSONResponse(result: any, pagination?: Pagination) {
+export function createJSONResponse(
+  result: any,
+  pagination?: Pagination
+): JSONResponse<any> {
   return {
     result,
     metadata: {

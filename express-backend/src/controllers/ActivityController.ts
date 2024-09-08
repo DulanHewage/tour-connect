@@ -3,9 +3,11 @@ import ActivityService from "../services/ActivityService.js";
 import {
   handleErrorResponse,
   commaSeparatedStringToArray,
+  createJSONResponse,
 } from "../helpers/index.js";
 import { FetchActivitiesParams } from "../../../shared/types/index.js";
 import { fetchActivitiesSchema } from "../validations/activityValidations.js";
+import { ActivityModel } from "../models/ActivityModel.js";
 
 const activityService = new ActivityService();
 
@@ -32,7 +34,7 @@ class ActivityController {
       const activities = await activityService.fetchActivities(
         fetchActivitiesParams
       );
-      res.status(200).json(activities);
+      res.status(200).json(createJSONResponse(activities));
     } catch (error) {
       if (error instanceof Error) {
         handleErrorResponse(error, res, 400);
@@ -70,6 +72,20 @@ class ActivityController {
     }
 
     return fetchActivitiesParams;
+  }
+
+  static async getActivityStats(req: Request, res: Response): Promise<void> {
+    try {
+      const stats = await activityService.getActivityStats(req, res);
+
+      if (stats.maxPrice !== undefined && stats.minPrice !== undefined) {
+        res.status(200).json(createJSONResponse(stats));
+      } else {
+        handleErrorResponse("No activities found", res, 404);
+      }
+    } catch (error) {
+      handleErrorResponse(error, res);
+    }
   }
 }
 

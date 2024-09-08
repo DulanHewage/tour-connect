@@ -20,8 +20,12 @@ export interface ActivityFilter {
   searchQuery: string;
   selectedRating: number | string;
   specialOffer: boolean;
-  price: number;
   pageSize?: number;
+  priceRange: [number, number];
+}
+export interface ActivityStats {
+  maxPrice?: number;
+  minPrice?: number;
 }
 export interface ErrorResponse {
   message: string;
