@@ -1,5 +1,8 @@
 <template>
-  <div class="flex items-center space-x-2 text-sm gap-1">
+  <div
+    class="flex items-center space-x-2 text-sm gap-1"
+    data-testid="pagination"
+  >
     <BaseButton
       size="small"
       variant="text"

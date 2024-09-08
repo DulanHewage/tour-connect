@@ -12,8 +12,8 @@ export default defineNuxtConfig({
   css: ["~/assets/css/common.css"],
   runtimeConfig: {
     public: {
-      localApiBase: "http://localhost:5000",
-      dockerApiBase: "http://express-app:5000",
+      localApiBase: "http://localhost:5000/api/v1",
+      dockerApiBase: "http://express-app:5000/api/v1",
       isDocker: process.env.DOCKER,
     },
   },

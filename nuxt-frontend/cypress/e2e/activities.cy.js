@@ -1,7 +1,7 @@
 describe("Activities: Search & Filters", () => {
   it("should display activity cards matching the search query when text is entered in the search box", () => {
     // Intercept the network request
-    cy.intercept("GET", "http://localhost:5000/activities*").as(
+    cy.intercept("GET", `${Cypress.env("apiUrl")}/activities*`).as(
       "getActivities"
     );
 
@@ -31,7 +31,7 @@ describe("Activities: Search & Filters", () => {
     });
   });
   it("should display a message when no activities are found", () => {
-    cy.intercept("GET", "http://localhost:5000/activities*").as(
+    cy.intercept("GET", `${Cypress.env("apiUrl")}/activities*`).as(
       "getActivities"
     );
 
@@ -49,14 +49,13 @@ describe("Activities: Search & Filters", () => {
     cy.get("[data-testid='no-activities-message']").should("exist");
   });
   it("should only display activities with special offers when the 'Special Offers' checkbox is checked", () => {
-    cy.intercept("GET", "http://localhost:5000/activities*").as(
+    cy.intercept("GET", `${Cypress.env("apiUrl")}/activities*`).as(
       "getActivities"
     );
 
     cy.visit("/");
 
     const specialOfferCheckbox = cy.get("#special-offer-checkbox");
-    // specialOfferCheckbox.focus();
     specialOfferCheckbox.click();
     specialOfferCheckbox.click();
     specialOfferCheckbox.click();
@@ -67,34 +66,28 @@ describe("Activities: Search & Filters", () => {
     const cards = wrapper.get("[data-testid='activity-card']");
 
     cards.each((card) => {
-      // check if data-testid="special-offer-ribbon" exists
       cy.wrap(card)
         .find("[data-testid='special-offer-ribbon']")
         .should("exist");
     });
   });
   it("should display pagination when the number of activities exceeds the limit", () => {
-    cy.intercept("GET", "http://localhost:5000/activities*").as(
-      "getActivities"
-    );
-
     cy.visit("/");
-
-    cy.wait("@getActivities");
 
     // Assert that the pagination component exists
     cy.get("[data-testid='pagination']").should("exist");
   });
-  it.only("should display the correct number of activities in 'showing x of z activities' when the number of activities exceeds the limit", () => {
-    cy.intercept("GET", "http://localhost:5000/activities*").as(
-      "getActivities"
-    );
-
+  it("should display the correct number of activities in 'showing x of z activities' when the number of activities exceeds the limit", () => {
     cy.visit("/");
 
-    cy.wait("@getActivities");
-
-    // Assert that the correct number of activities is displayed
-    cy.get("[data-testid='showing-entries']").should("exist");
+    cy.get("[data-testid='showing-entries']")
+      .should("exist")
+      .and((element) => {
+        const text = element.text();
+        const match = text.match(/Showing (\d+) of (\d+) activities/);
+        expect(match).to.not.be.null;
+        const [, shown, total] = match;
+        expect(parseInt(shown)).to.be.at.most(parseInt(total));
+      });
   });
 });

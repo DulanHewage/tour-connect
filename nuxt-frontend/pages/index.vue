@@ -13,7 +13,10 @@
       />
 
       <div class="flex justify-between">
-        <div class="pt-4 pb-2 text-gray-600 text-sm">
+        <div
+          class="pt-4 pb-2 text-gray-600 text-sm"
+          data-testid="showing-entries"
+        >
           Showing {{ activities.length }} of
           {{ pagination?.totalItems ? pagination?.totalItems : 0 }}
           activities
@@ -82,11 +85,17 @@ async function onChangePage(page: number) {
   await debouncedGetActivities();
 }
 
-watch(filters, async () => {
-  setCurrentPage(1);
-  currentPage.value = 1;
-  await debouncedGetActivities();
-});
+watch(
+  filters,
+  async () => {
+    setCurrentPage(1);
+    currentPage.value = 1;
+    await debouncedGetActivities();
+  },
+  {
+    deep: true,
+  }
+);
 
 onMounted(() => {
   // sets the activities in the store
