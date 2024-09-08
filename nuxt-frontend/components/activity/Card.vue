@@ -1,10 +1,18 @@
 <script setup lang="ts">
 import type { Activity } from "../../../shared/types";
-const props = defineProps<{
-  activity: Activity;
-}>();
+/**
+ * Validate and define props for the ActivityCard component
+ */
+const props = defineProps({
+  activity: {
+    type: Object as () => Activity,
+    required: true,
+    validator: (value: Activity) => {
+      return value && typeof value === "object" && "_id" in value;
+    },
+  },
+});
 
-// Splits activity title into `mainTitle` and `subTitle` at the first colon.
 const title = computed(() => {
   return {
     mainTitle: props.activity.title?.split(":")[0] || "",
@@ -15,8 +23,8 @@ const title = computed(() => {
 
 <template>
   <div
-    class="w-full block shadow rounded-md border border-gray-300/50 hover:border-sky-500/50 hover:shadow-sm transition-all"
     v-if="activity"
+    class="w-full block shadow rounded-md border border-gray-300/50 hover:border-sky-500/50 hover:shadow-sm transition-all"
     data-testid="activity-card"
   >
     <div class="flex flex-col md:flex-row">
