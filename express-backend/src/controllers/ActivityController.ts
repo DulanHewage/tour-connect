@@ -49,9 +49,10 @@ class ActivityController {
    * @returns {FetchActivitiesParams} The constructed FetchActivitiesParams object.
    */
   private static buildFetchActivitiesParams(query: any): FetchActivitiesParams {
+    console.log("query", query);
     const fetchActivitiesParams: FetchActivitiesParams = {
       rating: query.rating ? Number(query.rating) : undefined,
-      specialOffer: query.specialOffer === "true" ? true : undefined,
+      specialOffer: query.specialOffer,
       q: query.q,
       page: query.page ? Number(query.page) : undefined,
       pageSize: query.pageSize ? Number(query.pageSize) : undefined,
