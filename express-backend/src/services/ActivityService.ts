@@ -1,14 +1,18 @@
 import {
   Activity,
   FetchActivitiesParams,
-  JSONResponse,
   ActivityStats,
+  Pagination,
 } from "../../../shared/types/index.js";
-import { createJSONResponse, handleErrorResponse } from "../helpers/index.js";
 import ActivityRepository from "../repositories/ActivityRepository.js";
 import NodeCache from "node-cache";
 import { ActivityModel } from "../models/ActivityModel.js";
 import { Request, Response } from "express";
+
+interface FetchActivitiesResult {
+  activities: Activity[];
+  pagination: Pagination;
+}
 
 class ActivityService {
   private activityRepository: ActivityRepository;
@@ -21,10 +25,10 @@ class ActivityService {
 
   async fetchActivities(
     params: FetchActivitiesParams = {}
-  ): Promise<JSONResponse<Activity[]>> {
+  ): Promise<FetchActivitiesResult> {
     try {
       const cacheKey = this.generateCacheKey(params);
-      const cachedResult = this.cache.get<JSONResponse<Activity[]>>(cacheKey);
+      const cachedResult = this.cache.get<FetchActivitiesResult>(cacheKey);
 
       if (cachedResult) {
         return cachedResult;
@@ -32,7 +36,7 @@ class ActivityService {
 
       const { activities, pagination } =
         await this.activityRepository.findActivities(params);
-      const result = createJSONResponse(activities, pagination);
+      const result = { activities, pagination };
 
       this.cache.set(cacheKey, result);
       return result;
